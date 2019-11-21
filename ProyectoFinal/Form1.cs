@@ -27,6 +27,9 @@ namespace ProyectoFinal {
 
         SortedDictionary<String, List<Juego>> diccionarioAutores = new SortedDictionary<string, List<Juego>>();
         SortedDictionary<int, List<Juego>> diccionarioJuegos = new SortedDictionary<int, List<Juego>>();
+        SortedDictionary<String, List<Juego>> diccionarioCategorias = new SortedDictionary<String, List<Juego>>();
+        SortedDictionary<String, List<Juego>> diccionarioFamilias = new SortedDictionary<String, List<Juego>>();
+        SortedDictionary<String, List<Juego>> diccionarioMecanicas = new SortedDictionary<String, List<Juego>>();
 
 
         public Form1() {
@@ -43,7 +46,7 @@ namespace ProyectoFinal {
             } else {
 
                 agregarColumnasParaAutorListView();
-                agregarNodosRaizArbol();
+
 
                 limpiarListView();
                 limpiarTreeView();
@@ -51,22 +54,23 @@ namespace ProyectoFinal {
 
                 diccionarioAutores.Clear();
                 diccionarioJuegos.Clear();
+                diccionarioCategorias.Clear();
 
 
 
 
 
-                try {
-                    Usuario usuario = new Usuario(txtNombre.Text, directorioCacheUsuarios);
+                Usuario usuario = new Usuario(txtNombre.Text, directorioCacheUsuarios);
 
-                    guardarDatosEnDiccionarioAutores(usuario);
-                    guardarDatosEnDiccionarioJuegos(usuario);
 
-                    mostrarElementos();
+                guardarDatosEnDiccionarioAutores(usuario);
+                guardarDatosEnDiccionarioJuegos(usuario);
+                guardarDatosEnDiccionarioCategoria(usuario);
+                guardarDatosEnDiccionarioFamilia(usuario);
+                guardarDatosEnDiccionarioMecanica(usuario);
+                mostrarElementos();
 
-                } catch (Exception excepcion) {
 
-                }
 
             }
 
@@ -88,16 +92,62 @@ namespace ProyectoFinal {
             }
 
             foreach (int numJugadores in diccionarioJuegos.Keys) {
+
+
+
                 agregarNumJugadoresTreeView(numJugadores.ToString());
+
+
+
+
                 //agregarAutorListView(autor);
 
                 foreach (Juego juego in diccionarioJuegos[numJugadores]) {
                     imglArbol.Images.Add(Image.FromFile(directorioCacheJuego + "thumbnail/" + juego.id + ".jpg"));
+
                     agregarJuegoEnNumJugadoresTreeView(numJugadores.ToString(), juego);
                     lblMensaje.Text = diccionarioJuegos.Count.ToString() + " número de Jugadores.";
                 }
             }
 
+            foreach (String categorias in diccionarioCategorias.Keys) {
+
+                agregarCategoriasTreeView(categorias);
+                //agregarAutorListView(autor);
+
+                foreach (Juego juego in diccionarioCategorias[categorias]) {
+
+                    imglArbol.Images.Add(Image.FromFile(directorioCacheJuego + "thumbnail/" + juego.id + ".jpg"));
+                    agregarJuegoEnCategoriaTreeView(categorias, juego);
+                    lblMensaje.Text = diccionarioCategorias.Count.ToString() + " número de Juegos.";
+                }
+            }
+
+            foreach (String familias in diccionarioFamilias.Keys) {
+
+                agregarFamiliasTreeView(familias);
+                //agregarAutorListView(autor);
+
+                foreach (Juego juego in diccionarioFamilias[familias]) {
+
+                    imglArbol.Images.Add(Image.FromFile(directorioCacheJuego + "thumbnail/" + juego.id + ".jpg"));
+                    agregarJuegoEnFamiliaTreeView(familias, juego);
+                    lblMensaje.Text = diccionarioFamilias.Count.ToString() + " número de Juegos.";
+                }
+            }
+
+            foreach (String mecanicas in diccionarioMecanicas.Keys) {
+
+                agregarMecanicasTreeView(mecanicas);
+                //agregarAutorListView(autor);
+
+                foreach (Juego juego in diccionarioMecanicas[mecanicas]) {
+
+                    imglArbol.Images.Add(Image.FromFile(directorioCacheJuego + "thumbnail/" + juego.id + ".jpg"));
+                    agregarJuegoEnMecanicaTreeView(mecanicas, juego);
+                    lblMensaje.Text = diccionarioFamilias.Count.ToString() + " número de Juegos.";
+                }
+            }
 
 
         }
@@ -136,11 +186,71 @@ namespace ProyectoFinal {
             lvJuegos.Items.Add(item);
         }
 
+        private void agregarNumeroListView(String numero) {
+            ListViewItem item = new ListViewItem(numero, imglChiquitos.Images.Count);
+            imglChiquitos.Images.Add(imglArbol.Images[0]);
+            item.Tag = "numjugador";
+            lvJuegos.Items.Add(item);
+        }
+
+        private void agregarFamiliaListView(String familia) {
+            ListViewItem item = new ListViewItem(familia, imglChiquitos.Images.Count);
+            imglChiquitos.Images.Add(imglArbol.Images[0]);
+            item.Tag = "familia";
+            lvJuegos.Items.Add(item);
+        }
+
+        private void agregarMecanicaListView(String mecanica) {
+            ListViewItem item = new ListViewItem(mecanica, imglChiquitos.Images.Count);
+            imglChiquitos.Images.Add(imglArbol.Images[0]);
+            item.Tag = "mecanica";
+            lvJuegos.Items.Add(item);
+        }
+
+        private void agregarCategoriaListView(String categoria) {
+            ListViewItem item = new ListViewItem(categoria, imglChiquitos.Images.Count);
+            imglChiquitos.Images.Add(imglArbol.Images[0]);
+            item.Tag = "categoria";
+            lvJuegos.Items.Add(item);
+        }
+
         private void agregarColumnasParaAutorListView() {
             lvJuegos.Columns.Clear();
             lvJuegos.Columns.Add("Autor");
             lvJuegos.Columns[0].Width = 200;
         }
+
+        private void agregarColumnasParaNumeroJugadoresListView() {
+            lvJuegos.Columns.Clear();
+            lvJuegos.Columns.Add("Número de Jugadores");
+            lvJuegos.Columns[0].Width = 200;
+        }
+        private void agregarColumnasParaCategoriasListView() {
+            lvJuegos.Columns.Clear();
+            lvJuegos.Columns.Add("Categorias");
+            lvJuegos.Columns[0].Width = 200;
+        }
+
+        private void agregarColumnasParaFamiliasListView() {
+            lvJuegos.Columns.Clear();
+            lvJuegos.Columns.Add("Familias");
+            lvJuegos.Columns[0].Width = 200;
+        }
+
+        private void agregarColumnasParaMecanicasListView() {
+            lvJuegos.Columns.Clear();
+            lvJuegos.Columns.Add("Mecánicas");
+            lvJuegos.Columns[0].Width = 200;
+        }
+
+
+
+        private void agregarColumnasParaCarpetasJuegoListView() {
+            lvJuegos.Columns.Clear();
+            lvJuegos.Columns.Add("Carpeta");
+            lvJuegos.Columns[0].Width = 200;
+        }
+
 
         private void limpiarListView() {
             lvJuegos.Columns.Clear();
@@ -165,13 +275,128 @@ namespace ProyectoFinal {
 
         }
 
+        private void guardarDatosEnDiccionarioJuegos(Usuario usuario) {
+            foreach (String idJuego in usuario.coleccionJuegos) {
+                Juego juegoTemporal = new Juego(idJuego, directorioCacheJuego);
+                List<Juego> listaJuegos;
+                for (int i = juegoTemporal.jugadoresMinimos; i <= juegoTemporal.jugadoresMaximos; i++) {
+                    if (diccionarioJuegos.ContainsKey(i)) {
+                        listaJuegos = diccionarioJuegos[i];
+                        listaJuegos.Add(juegoTemporal);
+                        diccionarioJuegos[i] = listaJuegos;
+                    } else {
+                        listaJuegos = new List<Juego>();
+                        listaJuegos.Add(juegoTemporal);
+                        diccionarioJuegos.Add(i, listaJuegos);
+                    }
+                }
+            }
+        }
+
+        private void guardarDatosEnDiccionarioCategoria(Usuario juego) {
+            foreach (String categoria in juego.coleccionJuegos) {
+                Juego juegoTemporal = new Juego(categoria, directorioCacheJuego);
+                foreach (String autor in juegoTemporal.categorias) {
+                    List<Juego> listaCategoria;
+                    if (diccionarioCategorias.ContainsKey(autor)) {
+                        listaCategoria = diccionarioCategorias[autor];
+                        listaCategoria.Add(juegoTemporal);
+                        diccionarioCategorias[autor] = listaCategoria;
+                    } else {
+                        listaCategoria = new List<Juego>();
+                        listaCategoria.Add(juegoTemporal);
+                        diccionarioCategorias.Add(autor, listaCategoria);
+                    }
+                }
+            }
+        }
+
+
+        private void guardarDatosEnDiccionarioFamilia(Usuario juego) {
+            foreach (String familias in juego.coleccionJuegos) {
+                Juego juegoTemporal = new Juego(familias, directorioCacheJuego);
+                foreach (String familia in juegoTemporal.familias) {
+                    List<Juego> listaFamilia;
+                    if (diccionarioFamilias.ContainsKey(familia)) {
+                        listaFamilia = diccionarioFamilias[familia];
+                        listaFamilia.Add(juegoTemporal);
+                        diccionarioFamilias[familia] = listaFamilia;
+                    } else {
+                        listaFamilia = new List<Juego>();
+                        listaFamilia.Add(juegoTemporal);
+                        diccionarioFamilias.Add(familia, listaFamilia);
+                    }
+                }
+            }
+        }
+
+        private void guardarDatosEnDiccionarioMecanica(Usuario juego) {
+            foreach (String mecanicas in juego.coleccionJuegos) {
+                Juego juegoTemporal = new Juego(mecanicas, directorioCacheJuego);
+                foreach (String mecanica in juegoTemporal.mecanicas) {
+                    List<Juego> listaMecanicas;
+                    if (diccionarioMecanicas.ContainsKey(mecanica)) {
+                        listaMecanicas = diccionarioMecanicas[mecanica];
+                        listaMecanicas.Add(juegoTemporal);
+                        diccionarioMecanicas[mecanica] = listaMecanicas;
+                    } else {
+                        listaMecanicas = new List<Juego>();
+                        listaMecanicas.Add(juegoTemporal);
+                        diccionarioMecanicas.Add(mecanica, listaMecanicas);
+                    }
+                }
+            }
+        }
+
         private void agregarNumJugadoresTreeView(String nodo) {
             TreeNode nuevoNodo;
             nuevoNodo = new TreeNode(nodo, 0, 0);
-            nuevoNodo.Tag = "numJugadores";
+            nuevoNodo.Tag = "numerojugadores";
             nuevoNodo.Name = nodo;
-            tvAutores.Nodes.Find("juegos", false)[0].Nodes.Add(nuevoNodo);
+           // tvAutores.Nodes.Find("juegos", false)[0].Nodes.Add(nuevoNodo);
+            TreeNode padre = tvAutores.Nodes["juegos"].Nodes.Find("numjugadores", false)[0];
+            padre.Nodes.Add(nuevoNodo);
         }
+
+       
+
+
+
+        private void agregarCategoriasTreeView(String nodo) {
+            TreeNode nuevoNodo;
+            nuevoNodo = new TreeNode(nodo, 0, 0);
+            nuevoNodo.Tag = "categoria";
+            nuevoNodo.Name = nodo;
+            //tvAutores.Nodes.Find("juegos", false)[0].Nodes.Add(nuevoNodo);
+            TreeNode padre = tvAutores.Nodes["juegos"].Nodes.Find("categorias", false)[0];
+            padre.Nodes.Add(nuevoNodo);
+        }
+
+        private void agregarFamiliasTreeView(String nodo) {
+            TreeNode nuevoNodo;
+            nuevoNodo = new TreeNode(nodo, 0, 0);
+            nuevoNodo.Tag = "familia";
+            nuevoNodo.Name = nodo;
+            //tvAutores.Nodes.Find("juegos", false)[0].Nodes.Add(nuevoNodo);
+            TreeNode padre = tvAutores.Nodes["juegos"].Nodes.Find("familias", false)[0];
+            padre.Nodes.Add(nuevoNodo);
+        }
+
+        private void agregarMecanicasTreeView(String nodo) {
+            TreeNode nuevoNodo;
+            nuevoNodo = new TreeNode(nodo, 0, 0);
+            nuevoNodo.Tag = "mecanica";
+            nuevoNodo.Name = nodo;
+           // tvAutores.Nodes.Find("juegos", false)[0].Nodes.Add(nuevoNodo);
+            TreeNode padre = tvAutores.Nodes["juegos"].Nodes.Find("mecanicas", false)[0];
+            padre.Nodes.Add(nuevoNodo);
+        }
+
+
+
+
+
+
 
         private void agregarJuegoEnNumJugadoresTreeView(String nodoPadre, Juego nodo) {
             TreeNode nuevoNodo;
@@ -180,7 +405,41 @@ namespace ProyectoFinal {
             nuevoNodo.Name = nodo.id;
             nuevoNodo.ImageIndex = imglArbol.Images.Count - 1;
             nuevoNodo.SelectedImageIndex = imglArbol.Images.Count - 1;
-            TreeNode padre = tvAutores.Nodes["juegos"].Nodes.Find(nodoPadre, false)[0];
+            TreeNode padre = tvAutores.Nodes["juegos"].Nodes.Find("numjugadores", false)[0].Nodes.Find(nodoPadre,false)[0];
+            
+            padre.Nodes.Add(nuevoNodo);
+        }
+
+        private void agregarJuegoEnCategoriaTreeView(String nodoPadre, Juego nodo) {
+            TreeNode nuevoNodo;
+            nuevoNodo = new TreeNode(nodo.nombre, 0, 0);
+            nuevoNodo.Tag = "juego";
+            nuevoNodo.Name = nodo.id;
+            nuevoNodo.ImageIndex = imglArbol.Images.Count - 1;
+            nuevoNodo.SelectedImageIndex = imglArbol.Images.Count - 1;
+            TreeNode padre = tvAutores.Nodes["juegos"].Nodes.Find("categorias", false)[0].Nodes.Find(nodoPadre, false)[0];
+            padre.Nodes.Add(nuevoNodo);
+        }
+
+        private void agregarJuegoEnFamiliaTreeView(String nodoPadre, Juego nodo) {
+            TreeNode nuevoNodo;
+            nuevoNodo = new TreeNode(nodo.nombre, 0, 0);
+            nuevoNodo.Tag = "juego";
+            nuevoNodo.Name = nodo.id;
+            nuevoNodo.ImageIndex = imglArbol.Images.Count - 1;
+            nuevoNodo.SelectedImageIndex = imglArbol.Images.Count - 1;
+            TreeNode padre = tvAutores.Nodes["juegos"].Nodes.Find("familias", false)[0].Nodes.Find(nodoPadre, false)[0];
+            padre.Nodes.Add(nuevoNodo);
+        }
+
+        private void agregarJuegoEnMecanicaTreeView(String nodoPadre, Juego nodo) {
+            TreeNode nuevoNodo;
+            nuevoNodo = new TreeNode(nodo.nombre, 0, 0);
+            nuevoNodo.Tag = "juego";
+            nuevoNodo.Name = nodo.id;
+            nuevoNodo.ImageIndex = imglArbol.Images.Count - 1;
+            nuevoNodo.SelectedImageIndex = imglArbol.Images.Count - 1;
+            TreeNode padre = tvAutores.Nodes["juegos"].Nodes.Find("mecanicas", false)[0].Nodes.Find(nodoPadre, false)[0];
             padre.Nodes.Add(nuevoNodo);
         }
 
@@ -250,25 +509,7 @@ namespace ProyectoFinal {
             }
         }
 
-        private void guardarDatosEnDiccionarioJuegos(Usuario usuario) {
-
-            foreach (String idJuego in usuario.coleccionJuegos) {
-                Juego juegoTemporal = new Juego(idJuego, directorioCacheJuego);
-                List<Juego> listaJuegos;
-                for (int i = juegoTemporal.jugadoresMinimos; i <= juegoTemporal.jugadoresMaximos; i++) {
-                    if (diccionarioJuegos.ContainsKey(i)) {
-                        listaJuegos = diccionarioJuegos[i];
-                        listaJuegos.Add(juegoTemporal);
-                        diccionarioJuegos[i] = listaJuegos;
-                    } else {
-                        listaJuegos = new List<Juego>();
-                        listaJuegos.Add(juegoTemporal);
-                        diccionarioJuegos.Add(i, listaJuegos);
-                    }
-                }
-            }
-
-        }
+        
 
 
 
@@ -323,6 +564,7 @@ namespace ProyectoFinal {
         }
 
         private void tvAutores_AfterSelect(object sender, TreeViewEventArgs e) {
+
             if (e.Node.Tag.Equals("juego")) {
                 Juego juego = new Juego(e.Node.Name, directorioCacheJuego);
                 mostrarDatosJuego(juego);
@@ -339,7 +581,7 @@ namespace ProyectoFinal {
                 }
                 pnlInfoJuego.Visible = false;
             } else if (e.Node.Tag.Equals("autores")) {
-                
+
                 limpiarListView();
                 agregarColumnasParaAutorListView();
                 tvAutores.GetNodeAt(0, 0).Expand();
@@ -348,14 +590,69 @@ namespace ProyectoFinal {
                 }
                 pnlInfoJuego.Visible = false;
                 lblMensaje.Text = diccionarioAutores.Count.ToString() + " autores";
+
             } else if (e.Node.Tag.Equals("juegos")) {
                 limpiarListView();
-                lblMensaje.Text = diccionarioJuegos.Count.ToString() + " juegos";
-            } else if (e.Node.Tag.Equals("numjugadores")) {
+                agregarColumnasParaCarpetasJuegoListView();
+                tvAutores.GetNodeAt(0,0).Expand();
 
-                MessageBox.Show("Proximamente");
+                
+
+
+                lblMensaje.Text = diccionarioJuegos.Count.ToString() + " juegos";
+                
+            } else if (e.Node.Tag.Equals("numjugadores")) {
+                limpiarListView();
+                agregarColumnasParaNumeroJugadoresListView();
+                tvAutores.GetNodeAt(0, 0).Expand();
+                foreach (int numero in diccionarioJuegos.Keys) {
+                    agregarNumeroListView(Convert.ToString(numero));
+                   
+                }
+                pnlInfoJuego.Visible = false;
+                //lblMensaje.Text = diccionarioJuegos.Count.ToString() + " clasificaciones";
+
+
+            } else if (e.Node.Tag.Equals("categorias")) {
+                limpiarListView();
+                agregarColumnasParaCategoriasListView();
+                tvAutores.GetNodeAt(0, 0).Expand();
+                foreach (String categoria in diccionarioCategorias.Keys) {
+                    agregarNumeroListView(categoria);
+
+                }
+                pnlInfoJuego.Visible = false;
+                lblMensaje.Text = diccionarioCategorias.Count.ToString() + " categorias";
+
+
+            } else if (e.Node.Tag.Equals("familias")) {
+                limpiarListView();
+                agregarColumnasParaFamiliasListView();
+                tvAutores.GetNodeAt(0, 0).Expand();
+                foreach (String familia in diccionarioFamilias.Keys) {
+                    agregarFamiliaListView(familia);
+
+                }
+                pnlInfoJuego.Visible = false;
+                lblMensaje.Text = diccionarioFamilias.Count.ToString() + " familias";
+
+
+
+
+            } else if (e.Node.Tag.Equals("mecanicas")) {
+                limpiarListView();
+                agregarColumnasParaMecanicasListView();
+                tvAutores.GetNodeAt(0, 0).Expand();
+                foreach (String mecanica in diccionarioMecanicas.Keys) {
+                    agregarMecanicaListView(mecanica);
+
+                }
+                pnlInfoJuego.Visible = false;
+                lblMensaje.Text = diccionarioMecanicas.Count.ToString() + " mecánicas";
+
 
             }
+
         }
 
         private void mostrarDatosJuego(Juego juego) {
@@ -413,11 +710,12 @@ namespace ProyectoFinal {
             TreeNode newNode = new TreeNode("Autores");
             tvAutores.Nodes.Add(newNode);
             newNode.Tag = "autores";
-
+            newNode.Name = "autores";
             TreeNode nodoJuegos = new TreeNode("Juegos", 1, 1);
             tvAutores.Nodes.Add(nodoJuegos);
             nodoJuegos.Tag = "juegos";
-            nodoJuegos.Tag = "numjugadores";
+            nodoJuegos.Name = "juegos";
+            
         }
 
 
@@ -430,6 +728,10 @@ namespace ProyectoFinal {
         }
 
         private void label2_Click(object sender, EventArgs e) {
+
+        }
+
+        private void txtMecanicas_TextChanged(object sender, EventArgs e) {
 
         }
     }

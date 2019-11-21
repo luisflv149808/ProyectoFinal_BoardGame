@@ -29,6 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Autores");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Número Jugadores");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Categorias");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Familias");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Mécanicas");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Juegos", new System.Windows.Forms.TreeNode[] {
+            treeNode2,
+            treeNode3,
+            treeNode4,
+            treeNode5});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pnlBuscador = new System.Windows.Forms.Panel();
             this.btnBuscarUsuario = new System.Windows.Forms.Button();
@@ -115,10 +125,10 @@
             // lblMensaje
             // 
             this.lblMensaje.AutoSize = true;
-            this.lblMensaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMensaje.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMensaje.Location = new System.Drawing.Point(12, 18);
             this.lblMensaje.Name = "lblMensaje";
-            this.lblMensaje.Size = new System.Drawing.Size(0, 25);
+            this.lblMensaje.Size = new System.Drawing.Size(0, 20);
             this.lblMensaje.TabIndex = 0;
             // 
             // tvAutores
@@ -128,6 +138,27 @@
             this.tvAutores.ImageList = this.imglArbol;
             this.tvAutores.Location = new System.Drawing.Point(0, 61);
             this.tvAutores.Name = "tvAutores";
+            treeNode1.Name = "autores";
+            treeNode1.Tag = "autores";
+            treeNode1.Text = "Autores";
+            treeNode2.Name = "numjugadores";
+            treeNode2.Tag = "numjugadores";
+            treeNode2.Text = "Número Jugadores";
+            treeNode3.Name = "categorias";
+            treeNode3.Tag = "categorias";
+            treeNode3.Text = "Categorias";
+            treeNode4.Name = "familias";
+            treeNode4.Tag = "familias";
+            treeNode4.Text = "Familias";
+            treeNode5.Name = "mecanicas";
+            treeNode5.Tag = "mecanicas";
+            treeNode5.Text = "Mécanicas";
+            treeNode6.Name = "juegos";
+            treeNode6.Tag = "juegos";
+            treeNode6.Text = "Juegos";
+            this.tvAutores.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode6});
             this.tvAutores.SelectedImageIndex = 0;
             this.tvAutores.Size = new System.Drawing.Size(281, 577);
             this.tvAutores.TabIndex = 3;
@@ -207,67 +238,71 @@
             // 
             // txCategorias
             // 
-            this.txCategorias.Enabled = false;
-            this.txCategorias.Location = new System.Drawing.Point(6, 514);
+            this.txCategorias.Cursor = System.Windows.Forms.Cursors.No;
+            this.txCategorias.Location = new System.Drawing.Point(15, 514);
             this.txCategorias.Multiline = true;
             this.txCategorias.Name = "txCategorias";
-            this.txCategorias.Size = new System.Drawing.Size(283, 57);
+            this.txCategorias.ReadOnly = true;
+            this.txCategorias.Size = new System.Drawing.Size(274, 57);
             this.txCategorias.TabIndex = 15;
             // 
             // txtFamilias
             // 
-            this.txtFamilias.Enabled = false;
-            this.txtFamilias.Location = new System.Drawing.Point(6, 429);
+            this.txtFamilias.Cursor = System.Windows.Forms.Cursors.No;
+            this.txtFamilias.Location = new System.Drawing.Point(16, 429);
             this.txtFamilias.Multiline = true;
             this.txtFamilias.Name = "txtFamilias";
-            this.txtFamilias.Size = new System.Drawing.Size(283, 57);
+            this.txtFamilias.ReadOnly = true;
+            this.txtFamilias.Size = new System.Drawing.Size(273, 57);
             this.txtFamilias.TabIndex = 14;
             // 
             // txtMecanicas
             // 
-            this.txtMecanicas.Enabled = false;
-            this.txtMecanicas.Location = new System.Drawing.Point(6, 337);
+            this.txtMecanicas.Cursor = System.Windows.Forms.Cursors.No;
+            this.txtMecanicas.Location = new System.Drawing.Point(15, 337);
             this.txtMecanicas.Multiline = true;
             this.txtMecanicas.Name = "txtMecanicas";
-            this.txtMecanicas.Size = new System.Drawing.Size(283, 56);
+            this.txtMecanicas.ReadOnly = true;
+            this.txtMecanicas.Size = new System.Drawing.Size(274, 56);
             this.txtMecanicas.TabIndex = 13;
+            this.txtMecanicas.TextChanged += new System.EventHandler(this.txtMecanicas_TextChanged);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(6, 493);
+            this.label7.Location = new System.Drawing.Point(13, 493);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(80, 18);
+            this.label7.Size = new System.Drawing.Size(84, 18);
             this.label7.TabIndex = 9;
-            this.label7.Text = "Categorias";
+            this.label7.Text = "Categorias:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(6, 403);
+            this.label6.Location = new System.Drawing.Point(13, 408);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 18);
+            this.label6.Size = new System.Drawing.Size(67, 18);
             this.label6.TabIndex = 8;
-            this.label6.Text = "Familias";
+            this.label6.Text = "Familias:";
             // 
             // label5
             // 
             this.label5.AutoEllipsis = true;
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 309);
+            this.label5.Location = new System.Drawing.Point(12, 309);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(80, 18);
+            this.label5.Size = new System.Drawing.Size(84, 18);
             this.label5.TabIndex = 7;
-            this.label5.Text = "Mecánicas";
+            this.label5.Text = "Mecánicas:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(6, 254);
+            this.label4.Location = new System.Drawing.Point(13, 255);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 18);
             this.label4.TabIndex = 6;
@@ -277,7 +312,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(6, 202);
+            this.label3.Location = new System.Drawing.Point(12, 202);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(47, 18);
             this.label3.TabIndex = 5;
@@ -287,7 +322,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(6, 151);
+            this.label2.Location = new System.Drawing.Point(12, 151);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 18);
             this.label2.TabIndex = 4;
@@ -307,7 +342,7 @@
             // 
             this.lblIlustrador.AutoSize = true;
             this.lblIlustrador.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIlustrador.Location = new System.Drawing.Point(13, 291);
+            this.lblIlustrador.Location = new System.Drawing.Point(12, 273);
             this.lblIlustrador.Name = "lblIlustrador";
             this.lblIlustrador.Size = new System.Drawing.Size(0, 18);
             this.lblIlustrador.TabIndex = 2;
@@ -316,7 +351,7 @@
             // 
             this.lblAutor.AutoSize = true;
             this.lblAutor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAutor.Location = new System.Drawing.Point(13, 236);
+            this.lblAutor.Location = new System.Drawing.Point(12, 220);
             this.lblAutor.Name = "lblAutor";
             this.lblAutor.Size = new System.Drawing.Size(0, 18);
             this.lblAutor.TabIndex = 1;
@@ -325,7 +360,7 @@
             // 
             this.lblNombreJuego.AutoSize = true;
             this.lblNombreJuego.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNombreJuego.Location = new System.Drawing.Point(13, 184);
+            this.lblNombreJuego.Location = new System.Drawing.Point(13, 169);
             this.lblNombreJuego.Name = "lblNombreJuego";
             this.lblNombreJuego.Size = new System.Drawing.Size(0, 18);
             this.lblNombreJuego.TabIndex = 0;

@@ -67,6 +67,7 @@ namespace ProyectoFinal {
 
                 foreach (XmlNode mecanica in listaMecanicas) {
                     mecanicas.Add(mecanica.Attributes["value"].Value);
+                    
                 }
 
 
