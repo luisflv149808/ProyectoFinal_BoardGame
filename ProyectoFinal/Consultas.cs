@@ -29,7 +29,7 @@ public class Consultas
             catch (Exception excepcion)
             {
                 System.Threading.Thread.Sleep(delay);
-                delay += 500;
+                delay += 100;
             }
         }
 
@@ -58,6 +58,12 @@ public class Consultas
     { 
 
         String urlConsulta = "https://boardgamegeek.com/xmlapi2/collection?username=" + usuario + "&own=1";
+        return consultarApi(urlConsulta);
+    }
+
+    public static XmlDocument consultarApiUsuarioJugadas(String usuario) {
+
+        String urlConsulta = "https://boardgamegeek.com/xmlapi2/plays?username=" + usuario;
         return consultarApi(urlConsulta);
     }
 

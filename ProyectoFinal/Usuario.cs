@@ -7,6 +7,8 @@ using System.Web;
 using System.Xml;
 using System.IO;
 using System.Net;
+using ProyectoFinal;
+
 public class Usuario
 {
     public String nombre;
@@ -20,28 +22,37 @@ public class Usuario
     public Usuario(String nombreUsuario, String rutaCacheUsuario)
     {
         XmlDocument documentoUsuario;
+        
         if (File.Exists(rutaCacheUsuario + nombreUsuario))
         {
+             
             documentoUsuario = new XmlDocument();
+            
             documentoUsuario.Load(rutaCacheUsuario + nombreUsuario);
+            
         }
         else
         {
             documentoUsuario = Consultas.consultarApiUsuario(nombreUsuario);
 
         }
-
         XmlDocument documentoColeccion;
         if (File.Exists(rutaCacheUsuario + "/coleccion/" + nombreUsuario))
         {
+            
+
             documentoColeccion = new XmlDocument();
             documentoColeccion.Load(rutaCacheUsuario + "/coleccion/" + nombreUsuario);
+            
         }
         else
         {
             documentoColeccion = Consultas.consultarApiUsuarioColeccionJuegos(nombreUsuario);
-
+            
         }
+
+
+        
 
 
 

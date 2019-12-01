@@ -18,17 +18,20 @@ namespace ProyectoFinal {
         public List<String> mecanicas = new List<string>();
         public List<String> familias = new List<string>();
         public List<String> categorias = new List<string>();
+        public List<String> ilustradores = new List<string>();
         public String ilustrador;
         public String rutaImagen;
         public String id;
         public int jugadoresMinimos;
         public int jugadoresMaximos;
         public String jugadoresRecomendados;
+        public String partidasGanadas;
 
 
 
 
-        XmlNodeList listaAutores, listaMecanicas, listaFamilia, listaCategoria;
+
+        XmlNodeList listaAutores, listaMecanicas, listaFamilia, listaCategoria,listaIlustradores;
 
         public Juego(String nombreJuego, String rutaCacheJuego) {
             XmlDocument documentoJuego;
@@ -59,6 +62,16 @@ namespace ProyectoFinal {
             } catch (Exception excepcion) {
                 autor = "Autor Anónimo";
             }
+
+            try {
+                listaIlustradores = documentoJuego.DocumentElement.SelectNodes("/items/item/link[@type='boardgameartist']");
+                foreach (XmlNode ilustrador in listaIlustradores) {
+                    ilustradores.Add(ilustrador.Attributes["value"].Value);
+                }
+            } catch (Exception excepcion) {
+               
+            }
+
 
 
             try {
@@ -105,12 +118,7 @@ namespace ProyectoFinal {
 
 
 
-            try {
-                ilustrador = documentoJuego.DocumentElement.SelectSingleNode("/items/item/link[@type='boardgameartist']").Attributes["value"].Value;
-
-            } catch (Exception excepcion) {
-                ilustrador = "No tiene ilustrador";
-            }
+          
 
 
 
